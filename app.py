@@ -139,4 +139,4 @@ api.add_resource(ResetChat, "/reset-chat")
 api.add_resource(GeneralReset, "/generalreset")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
