@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, session
+from flask import Flask, jsonify, render_template, redirect, url_for, request, session
 from flask_restful import Resource, Api, reqparse
 import markdown
 from assistant import authentication
@@ -18,6 +18,7 @@ parser = reqparse.RequestParser()
 parser.add_argument('email', type=str, required=True, help="Email cannot be blank!")
 parser.add_argument('password', type=str, required=True, help="Password cannot be blank!")
 parser.add_argument('query', type=str, required=True, help="Query cannot be blank!")
+
 
 class HomePage(Resource):
     # get method for homepage
@@ -125,6 +126,31 @@ class GeneralReset(Resource):
 # Helper function to format markdown text
 def format_markdown(markdown_text):
     return markdown.markdown(markdown_text)
+
+@app.route('/')
+def home():
+    return render_template('login.html')
+
+@app.route('/signup')
+def signup_page():
+    return render_template('signup.html')
+
+@app.route('/chat')
+def chat_page():
+    return render_template('chat.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login_page():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        # Authenticate user (use your authentication logic here)
+        if authentication.log_in(email, password):
+            session['user'] = email
+            return redirect(url_for('chat_page'))  # Redirect to chat page after successful login
+        else:
+            return jsonify({'response': "Incorrect Email or Password"})
+    return render_template('login.html')
 
 # Add resources to the API
 api.add_resource(HomePage, "/", "/home")

@@ -1,0 +1,378 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body {
+  display: flex;
+  place-items: center;
+  margin: 0;
+  height: 100vh;
+  padding: 0 24px;
+  background-size: cover;
+  font-family: "Euclid Circular A";
+  color: #f9f9f9;
+  background-repeat: no-repeat;
+  background-color: #150b29;
+}
+
+.background-image {
+  width: 100%;
+  height: 100%;
+  background-image: repeating-linear-gradient(
+      136deg,
+      rgba(121, 29, 77, 0.34) 0px,
+      rgba(121, 29, 77, 0.34) 1px,
+      transparent 70px,
+      transparent 51px
+    ),
+    repeating-linear-gradient(
+      136deg,
+      rgba(121, 29, 77, 0.34) 0px,
+      rgba(121, 29, 77, 0.34) 1px,
+      transparent 70px,
+      transparent 51px
+    ),
+    linear-gradient(226deg, rgb(22, 13, 44), rgb(22, 13, 44));
+  animation: colorChange 30s infinite ease-in-out;
+}
+
+@keyframes colorChange {
+  0% {
+    background-image: repeating-linear-gradient(
+        136deg,
+        rgba(121, 29, 77, 0.34) 0px,
+        rgba(121, 29, 77, 0.34) 1px,
+        transparent 70px,
+        transparent 51px
+      ),
+      repeating-linear-gradient(
+        136deg,
+        rgba(121, 29, 77, 0.34) 0px,
+        rgba(121, 29, 77, 0.34) 1px,
+        transparent 70px,
+        transparent 51px
+      ),
+      linear-gradient(226deg, rgb(22, 13, 44), rgb(22, 13, 44));
+  }
+
+  12.5% {
+    background-image: repeating-linear-gradient(
+        136deg,
+        rgba(115, 28, 73, 0.34) 0px,
+        rgba(115, 28, 73, 0.34) 1px,
+        transparent 70px,
+        transparent 51px
+      ),
+      repeating-linear-gradient(
+        136deg,
+        rgba(115, 28, 73, 0.34) 0px,
+        rgba(115, 28, 73, 0.34) 1px,
+        transparent 70px,
+        transparent 51px
+      ),
+      linear-gradient(226deg, rgb(21, 12, 42), rgb(21, 12, 42));
+  }
+
+  25% {
+    background-image: repeating-linear-gradient(
+        136deg,
+        rgba(110, 27, 70, 0.34) 0px,
+        rgba(110, 27, 70, 0.34) 1px,
+        transparent 70px,
+        transparent 51px
+      ),
+      repeating-linear-gradient(
+        136deg,
+        rgba(110, 27, 70, 0.34) 0px,
+        rgba(110, 27, 70, 0.34) 1px,
+        transparent 70px,
+        transparent 51px
+      ),
+      linear-gradient(226deg, rgb(21, 12, 42), rgb(21, 12, 42));
+  }
+
+  37.5% {
+    background-image: repeating-linear-gradient(
+        136deg,
+        rgba(105, 26, 67, 0.34) 0px,
+        rgba(105, 26, 67, 0.34) 1px,
+        transparent 70px,
+        transparent 51px
+      ),
+      repeating-linear-gradient(
+        136deg,
+        rgba(105, 26, 67, 0.34) 0px,
+        rgba(105, 26, 67, 0.34) 1px,
+        transparent 70px,
+        transparent 51px
+      ),
+      linear-gradient(226deg, rgb(21, 12, 41), rgb(21, 12, 41));
+  }
+
+  50% {
+    background-image: repeating-linear-gradient(
+        136deg,
+        rgba(100, 25, 65, 0.34) 0px,
+        rgba(100, 25, 65, 0.34) 1px,
+        transparent 70px,
+        transparent 51px
+      ),
+      repeating-linear-gradient(
+        136deg,
+        rgba(100, 25, 65, 0.34) 0px,
+        rgba(100, 25, 65, 0.34) 1px,
+        transparent 70px,
+        transparent 51px
+      ),
+      linear-gradient(226deg, rgb(20, 11, 40), rgb(20, 11, 40));
+  }
+
+  62.5% {
+    background-image: repeating-linear-gradient(
+        136deg,
+        rgba(95, 24, 62, 0.34) 0px,
+        rgba(95, 24, 62, 0.34) 1px,
+        transparent 70px,
+        transparent 51px
+      ),
+      repeating-linear-gradient(
+        136deg,
+        rgba(95, 24, 62, 0.34) 0px,
+        rgba(95, 24, 62, 0.34) 1px,
+        transparent 70px,
+        transparent 51px
+      ),
+      linear-gradient(226deg, rgb(19, 10, 39), rgb(19, 10, 39));
+  }
+
+  75% {
+    background-image: repeating-linear-gradient(
+        136deg,
+        rgba(90, 22, 60, 0.34) 0px,
+        rgba(90, 22, 60, 0.34) 1px,
+        transparent 70px,
+        transparent 51px
+      ),
+      repeating-linear-gradient(
+        136deg,
+        rgba(90, 22, 60, 0.34) 0px,
+        rgba(90, 22, 60, 0.34) 1px,
+        transparent 70px,
+        transparent 51px
+      ),
+      linear-gradient(226deg, rgb(19, 10, 38), rgb(19, 10, 38));
+  }
+
+  87.5% {
+    background-image: repeating-linear-gradient(
+        136deg,
+        rgba(85, 21, 57, 0.34) 0px,
+        rgba(85, 21, 57, 0.34) 1px,
+        transparent 70px,
+        transparent 51px
+      ),
+      repeating-linear-gradient(
+        136deg,
+        rgba(85, 21, 57, 0.34) 0px,
+        rgba(85, 21, 57, 0.34) 1px,
+        transparent 70px,
+        transparent 51px
+      ),
+      linear-gradient(226deg, rgb(18, 9, 36), rgb(18, 9, 36));
+  }
+
+  100% {
+    background-image: repeating-linear-gradient(
+        136deg,
+        rgba(80, 20, 55, 0.34) 0px,
+        rgba(80, 20, 55, 0.34) 1px,
+        transparent 70px,
+        transparent 51px
+      ),
+      repeating-linear-gradient(
+        136deg,
+        rgba(80, 20, 55, 0.34) 0px,
+        rgba(80, 20, 55, 0.34) 1px,
+        transparent 70px,
+        transparent 51px
+      ),
+      linear-gradient(226deg, rgb(18, 9, 35), rgb(18, 9, 35));
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
+
+.NeonLightText {
+  font-size: 6em;
+  color: #fff;
+  letter-spacing: 4px;
+  text-shadow: 0 0 20px #f000ff;
+  transition: text-shadow 0.4s ease-in-out;
+  margin-top: 20%;
+  margin-left: 3px;
+}
+
+.container {
+  display: block; /* Ensures it behaves like a block element */
+  width: 100%; /* Set to 100% to match the width of .login-card */
+  max-width: 500px; /* This matches the max-width of the .login-card */
+  padding: 10px; /* Padding inside the container */
+  border-radius: 10px; /* Rounded corners */
+  box-sizing: border-box; /* Ensures padding and borders are included in the element's width */
+  border: 2px solid transparent; /* Start with a transparent border */
+  background-color: transparent; /* No background color */
+  font-size: 30px;
+}
+
+/* Media query to ensure responsive design */
+@media (max-width: 630px) {
+  .container {
+    width: 100%;
+    max-width: 100%;
+    font-size: 1.5rem;
+    text-align: center; /* Centers the text inside the container */
+  }
+}
+
+.NeonLightText:hover {
+  text-shadow: 0 0 60px #f000ff;
+}
+/* Media query to hide .NeonLightText on mobile screens */
+@media (max-width: 630px) {
+  .NeonLightText {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 3em;
+  }
+}
+@keyframes rotate {
+  100% {
+    background-position: 15% 50%;
+  }
+}
+
+.login-card {
+  position: center;
+  z-index: 3;
+  width: 100%;
+  margin: 0 20px;
+  padding: 70px 30px 44px;
+  border-radius: 20px;
+  background: rgb(24 21 36 / 66%);
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+@media (width >= 448px) {
+  .login-card {
+    margin: 40px 60px;
+    width: 70%;
+    min-width: 400px;
+  }
+}
+
+@media (width >= 500px) {
+  body {
+    padding: 0;
+  }
+}
+
+@media (width >= 628px) {
+  .login-card {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0 44px;
+    width: 50%;
+    max-width: 500px;
+    min-width: auto;
+    display: flex;
+    border-radius: 0;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.login-card > h2 {
+  font-size: 36px;
+  font-weight: 400;
+  margin: 0 0 12px;
+}
+
+.login-card > h3 {
+  color: rgb(255 255 255 / 38%);
+  margin: 0 0 48px;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.login-form {
+  width: 100%;
+  margin: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.login-form > :is(input, button) {
+  width: 100%;
+  height: 56px;
+  border-radius: 6px;
+  border: 0;
+}
+
+.login-form > input {
+  color: rgb(255 255 255 / 96%);
+  background: rgb(255 255 255 / 8%);
+  font-family: inherit;
+  font-size: 16px;
+  padding: 0 16px;
+}
+
+.login-form > input:focus {
+  outline: var(--color-primary);
+}
+
+.login-form > input::placeholder {
+  color: rgb(255 255 255 / 38%);
+}
+
+.login-form > button {
+  cursor: pointer;
+  width: 100%;
+  height: 56px;
+  padding: 0 16px;
+  background: #c037a0;
+  color: #f9f9f9;
+  border: 0;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+  transition: all 0.375s;
+}
+
+.login-form > button:hover {
+  background: #86266d; /* Darker shade of the original color */
+}
+
+.login-form > a {
+  color: #c037a0;
+  font-weight: 900;
+  font-size: 16px;
+  text-align: left;
+  text-decoration: none; /* No underline by default */
+  margin-bottom: 30px;
+}
+
+.login-form > a:hover {
+  text-decoration: underline; /* Underline on hover */
+}
