@@ -221,15 +221,34 @@ body {
 }
 
 .container {
-  display: block; /* Ensures it behaves like a block element */
+  display: inline-block; /* Ensures it behaves like a block element */
   width: 100%; /* Set to 100% to match the width of .login-card */
   max-width: 500px; /* This matches the max-width of the .login-card */
   padding: 10px; /* Padding inside the container */
   border-radius: 10px; /* Rounded corners */
   box-sizing: border-box; /* Ensures padding and borders are included in the element's width */
-  border: 2px solid transparent; /* Start with a transparent border */
   background-color: transparent; /* No background color */
-  font-size: 30px;
+}
+
+.text {
+  overflow: hidden;
+  font-size: 20px;
+  font-weight: 700;
+  border-right: 2px solid transparent; /* Start with a transparent border */
+  white-space: nowrap;
+  animation: typing 6s steps(30, end), 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 100%;
+  }
+  70% {
+    width: 100%; /* Hold the full text for a while */
+  }
 }
 
 /* Media query to ensure responsive design */
