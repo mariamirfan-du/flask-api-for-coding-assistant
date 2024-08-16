@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/style1.css') }}"
+      href="{{ url_for('static', filename='css/login.css') }}"
     />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -38,9 +38,12 @@
       <div class="login-card">
         <h2>Sign up</h2>
         <h3>Enter your credentials</h3>
-        <form class="login-form">
-          <input type="text" placeholder="Email" />
-          <input type="password" placeholder="Password" />
+        <form class="login-form"
+          action="{{ url_for('sign_up') }}"
+          method="POST"
+        >
+          <input name="email" id="email" type="text" placeholder="Email" />
+          <input name="password" id="password" type="password" placeholder="Password" />
           <a href="{{ url_for('login_page') }}"
             >Do you have an account? Login</a
           >

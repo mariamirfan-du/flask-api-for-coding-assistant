@@ -1,168 +1,163 @@
-from flask import Flask, jsonify, render_template, redirect, url_for, request, session
-from flask_restful import Resource, Api, reqparse
-import markdown
+# from assistant import app
+from flask import Flask, render_template, redirect, url_for, request, jsonify, session
+# from authentication import log_in, sign_up, get_user_details, reset_password
 from assistant import authentication
 from assistant.generator import chat_response, reset_chat
 from assistant.general_chatbot import response , reset
+import markdown
 
 app = Flask(__name__)
-api = Api(app)
+app.secret_key = "64472475857858757857832109767876"
+count = 0
 
 basic_questions_and_responses = {
     'thank': 'I am glad I was able to help. Good luck with your project. Necroder at your service 24/7.',
     'hello': "Hello, I am Necroder, I am a super helpful coding assistant. No bug goes from my sight uncaught. How may I help you today?",
     'bye': 'Happy coding. Do not let a bug get you down :)',
+    'how are you': 'I am fabulous as ever. How may I help you?',
 }
 
-parser = reqparse.RequestParser()
-parser.add_argument('email', type=str, required=True, help="Email cannot be blank!")
-parser.add_argument('password', type=str, required=True, help="Password cannot be blank!")
-parser.add_argument('query', type=str, required=True, help="Query cannot be blank!")
+@app.route("/")
+# @app.route("/home")
+# def home_page():
+#     # return the home page index
+#     return jsonify({'response':"home page"})
 
-
-class HomePage(Resource):
-    # get method for homepage
-    def get(self):
-        return {'response':"home page"}, 200
+#------------------------------------------------Main Chatbot-----------------------------------------------------------
+@app.route('/ask')
+def chat_page():
+    if "user" not in session:
+        return redirect('/login')
     
-class ChatResponse(Resource):
-    def get(self):
-        # get method for chat-response
-        return jsonify({'response':"Hello, I am Necroder, I am a super helpful coding assistant. No bug goes from my sight uncaught. How may I help you today?"})
+    return render_template('chat.html')
 
-    def post(self):
-        # post method for chat response
-        args = parser.parse_args()
-        prompt = args['query']
+@app.route('/ask-get', methods=['GET', 'POST'])
+def get_chat_response():
+    if request.method == 'POST':
+        prompt = request.form["msg"]   # implement the logic for chat response and return 
 
-        try:
-            for question, answer in basic_questions_and_responses.items():
-                if question in prompt.lower():
-                    return jsonify({'response': answer})
-            response_text = chat_response(prompt)
-            return jsonify({'response': format_markdown(response_text)})
-        except Exception:
-            return jsonify({'response': "Error generating answer"})
-
-class GeneralChatResponse(Resource):
-    def get(self):
-        return jsonify({'response': "Hello, I am Necroder, I am a super helpful coding assistant. No bug goes from my sight uncaught. How may I help you today?"})
-
-    def post(self):
-        args = parser.parse_args()
-        prompt = args['query']
+        global count
+        if (count == 20):
+            reset_chat_history()
 
         try:
             for question, answer in basic_questions_and_responses.items():
                 if question in prompt.lower():
-                    return jsonify({'response': answer})
-            response_text = response(prompt)
-            return jsonify({'response': format_markdown(response_text)})
-        except Exception:
-            return jsonify({'response': "Error generating answer"})
+                    return answer
 
-class SignUp(Resource):
-    def post(self):
-        if "user" in session: 
-            return f"Hi {session['user']}"
+            response = chat_response(prompt)
+            count += 1
+            return format_markdown(response)
         
-        args = parser.parse_args()
-        email = args['email']
-        password = args['password']
+        except Exception as e:
+            print(e)
+            return "Error generating answer" 
+             
+    # if the request method is get then return the normal thing
+    return "Hello, I am Necroder, I am a super helpful coding assistant. No bug goes from my sight uncaught. How may I help you today?"
+#------------------------------------------------Main Chatbot ends-----------------------------------------------------------
+
+@app.route('/askgeneral' , methods=['GET', 'POST'])
+def get_response():
+    if request.method == 'POST':
+        prompt = request.form.get("prompt")    # implement the logic for chat response and return 
+        try:
+            for question, answer in basic_questions_and_responses:
+                if question in prompt.lower():
+                    return jsonify({'response': answer})
+            response = response(prompt)
+            return jsonify({'response': format_markdown(response)})
+        
+        except:
+            return jsonify({'response':"Error generating answer"}) 
+# if the request method is get then return the normal thing
+    return jsonify({'response':"Hello, I am Necroder, I am a super helpful coding assistant. No bug goes from my sight uncaught. How may I help you today?"})
+
+@app.route("/signup", methods=['GET', 'POST'])
+def sign_up():
+    # implement the sign up 
+    if "user" in session: 
+        return redirect('/ask')
+    
+    if request.method == "POST":
+        # get the data from the form
+        email = request.form["email"]
+        password = request.form["password"]
+        print('here')
 
         try:
             authentication.sign_up(email, password)
-        except Exception:
-            return jsonify({'response': "Failed to Sign Up"})
+            return redirect('/login')
+        except Exception as e:
+            print(e)
+            return "Failed to Sign Up"
+        
+    return render_template('signup.html')
+        
+@app.route("/login", methods=['GET', 'POST'])
+def login_page():
+    if "user" in session: 
+        return redirect('/ask')
+    
+    if request.method == "POST":
+        # get the username and password from the form
+        email = request.form["email"]
+        password = request.form["password"]
 
-class LoginPage(Resource):
-    def post(self):
-        if "user" in session: 
-            return f"Hi {session['user']}"
-
-        args = parser.parse_args()
-        email = args['email']
-        password = args['password']
-
-        try:
+        try: 
             user = authentication.log_in(email, password)
-            session['user'] = email
-            return jsonify({'response': "Login successful"})
-        except Exception:
-            return jsonify({'response': "Incorrect Email or Password"})
-
-class Logout(Resource):
-    def get(self):
+            session['user'] = email 
+            return redirect('/ask')
+        except Exception as e:
+            print(e) 
+            return jsonify({'response':"Incorrect Email or Password"})
+        
+    return render_template('login.html')
+    
+@app.route('/logout')
+def logout():
+    if 'user' in session:
         session.pop('user')
-        return jsonify({'response': "Logged out successfully"})
+    
+    return redirect('/login')
 
-class UserDetails(Resource):
-    def get(self):
-        if "user" in session:
-            return jsonify({'response': authentication.get_user_details()})
-        return jsonify({'response': "User not logged in"})
-
-class ForgotPassword(Resource):
-    def post(self):
-        args = parser.parse_args()
-        email = args['email']
-
+@app.route('/user-details')
+def user_details():
+    if "user" in session:
+        return jsonify({'response':authentication.get_user_details()})
+    
+@app.route('/forgot-password', methods=["POST", "GET"])
+def forgot_password():
+    if request.method == "POST":
+        email = request.form.get("email")
         try:
             authentication.reset_password(email)
-            return jsonify({'response': "Password Reset Email Sent"})
-        except Exception:
-            return jsonify({'response': "Failed to Reset Password"})
+            return jsonify({'response':"Password Reset Email Sent"})
+        except:
+            return jsonify({'response':"Failed to Reset Password"})
+        
+@app.route('/reset-chat')
+def reset_chat_history():
+    global count
+    count = 0
+    reset_chat()
 
-class ResetChat(Resource):
-    def get(self):
-        reset_chat()
-        return jsonify({'response': "Chat history reset successfully"})
+@app.route('/generalreset')
+def reser_chat():
+    reset()
 
-class GeneralReset(Resource):
-    def get(self):
-        reset()
-        return jsonify({'response': "General chat history reset successfully"})
+@app.route('/feedback', methods=['POST', 'GET'])
+def give_feedback():
+    if request.method == "POST":
+        # is your problem solved: yes or no
+        # are you satisfied with it: 
+        # 
+        pass
 
-# Helper function to format markdown text
 def format_markdown(markdown_text):
-    return markdown.markdown(markdown_text)
-
-@app.route('/')
-def home():
-    return render_template('login.html')
-
-@app.route('/signup')
-def signup_page():
-    return render_template('signup.html')
-
-@app.route('/chat')
-def chat_page():
-    return render_template('chat.html')
-
-@app.route('/login', methods=['GET', 'POST'])
-def login_page():
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-        # Authenticate user (use your authentication logic here)
-        if authentication.log_in(email, password):
-            session['user'] = email
-            return redirect(url_for('chat_page'))  # Redirect to chat page after successful login
-        else:
-            return jsonify({'response': "Incorrect Email or Password"})
-    return render_template('login.html')
-
-# Add resources to the API
-api.add_resource(HomePage, "/", "/home")
-api.add_resource(ChatResponse, "/ask")
-api.add_resource(GeneralChatResponse, "/askgeneral")
-api.add_resource(SignUp, "/signup")
-api.add_resource(LoginPage, "/login")
-api.add_resource(Logout, "/logout")
-api.add_resource(UserDetails, "/user-details")
-api.add_resource(ForgotPassword, "/forgot-password")
-api.add_resource(ResetChat, "/reset-chat")
-api.add_resource(GeneralReset, "/generalreset")
+    # Convert Markdown to HTML
+    html = markdown.markdown(markdown_text, extensions=['fenced_code'])
+    return html
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
