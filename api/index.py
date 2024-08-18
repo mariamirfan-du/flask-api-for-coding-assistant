@@ -1,6 +1,4 @@
-# from assistant import app
 from flask import Flask, render_template, redirect, url_for, request, jsonify, session
-# from authentication import log_in, sign_up, get_user_details, reset_password
 from assistant import authentication
 from assistant.generator import chat_response, reset_chat
 from assistant.general_chatbot import response , reset
@@ -18,10 +16,6 @@ basic_questions_and_responses = {
 }
 
 @app.route("/")
-# @app.route("/home")
-# def home_page():
-#     # return the home page index
-#     return jsonify({'response':"home page"})
 
 #------------------------------------------------Main Chatbot-----------------------------------------------------------
 @app.route('/ask')
