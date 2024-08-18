@@ -1,26 +1,5 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "app.py",
-      "use": "@vercel/python",
-    },
-    {
-      "src": "static/css/*",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "templates/**/*.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "app.py"
-    }
-  ],
-  "env": {
-    "PYTHONUNBUFFERED": "1"
-  }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api/index" }
+  ]
 }
